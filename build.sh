@@ -80,7 +80,7 @@ path() {
    export KBUILD_BUILD_HOST="builder"
 #  export KBUILD_BUILD_TIMESTAMP="Sat Apr 4 20:13:14 CST 2025"
    export PATH="${CLANG_DIR}/bin:${GCC64_DIR}/bin:${GCC_DIR}/bin:$PATH"
-   args="-j$(nproc) O=out CC=clang ARCH=arm64 SUBARCH=arm64 LD=ld.lld AR=llvm-ar NM=llvm-nm STRIP=llvm-strip OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump READELF=llvm-readelf HOSTCC=clang HOSTCXX=clang++ HOSTAR=llvm-ar HOSTLD=ld.lld CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1"
+   args="-j$(nproc) O=out CC=clang ARCH=arm64 SUBARCH=arm64 LD=ld.lld AR=llvm-ar NM=llvm-nm STRIP=llvm-strip OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump READELF=llvm-readelf HOSTCC=clang HOSTCXX=clang++ HOSTAR=llvm-ar HOSTLD=ld.lld CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1 CONFIG_KSU_SUSFS=y CONFIG_KSU_SUSFS_SUS_PATH=y CONFIG_KSU_SUSFS_SUS_MOUNT=y CONFIG_KSU_SUSFS_SUS_KSTAT=y CONFIG_KSU_SUSFS_SPOOF_UNAME=y CONFIG_KSU_SUSFS_ENABLE_LOG=y CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y CONFIG_KSU_SUSFS_OPEN_REDIRECT=y CONFIG_KSU_SUSFS_SUS_MAP=y"
 #  args="-j$(nproc) O=out CC=clang ARCH=arm64 HOSTCC=gcc LD=ld.lld CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-android-"
 
 }
@@ -89,9 +89,6 @@ path() {
 # 编译内核
 build() {
    make ${args} $DEFCONFIG
-   make ${args} menuconfig
-   make ${args} savedefconfig
-   cp out/.config arch/arm64/configs/"$device"_defconfig
    START_TIME=$(date +%s)
    make ${args} 2>&1 | tee "${CURRENT_DIR}/kernel.log"
    if [ ! -f "$IMAGE_DIR" ]; then
