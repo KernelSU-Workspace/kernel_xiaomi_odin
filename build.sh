@@ -76,8 +76,8 @@ email() {
 
 # 环境变量
 path() {
-   export KBUILD_BUILD_USER="18201329"
-   export KBUILD_BUILD_HOST="qq.com"
+   export KBUILD_BUILD_USER="xiaolegun"
+   export KBUILD_BUILD_HOST="builder"
 #  export KBUILD_BUILD_TIMESTAMP="Sat Apr 4 20:13:14 CST 2025"
    export PATH="${CLANG_DIR}/bin:${GCC64_DIR}/bin:${GCC_DIR}/bin:$PATH"
    args="-j$(nproc) O=out CC=clang ARCH=arm64 SUBARCH=arm64 LD=ld.lld AR=llvm-ar NM=llvm-nm STRIP=llvm-strip OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump READELF=llvm-readelf HOSTCC=clang HOSTCXX=clang++ HOSTAR=llvm-ar HOSTLD=ld.lld CLANG_TRIPLE=aarch64-linux-gnu- CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabi- LLVM=1 LLVM_IAS=1"
@@ -151,7 +151,6 @@ clean() {
 # 主程序
 main() {
    install
-   email
    path
    build
    package
